@@ -1,9 +1,14 @@
 package com.app.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.entites.Coupon;
+import com.app.payloads.AddressDTO;
 import com.app.payloads.CouponDTO;
 import com.app.repositories.CouponRepo;
 
@@ -15,6 +20,9 @@ public class CouponServiceImpl implements CouponService{
 
     @Autowired
     private CouponRepo couponRepo;
+
+    @Autowired
+	private ModelMapper modelMapper;
 
     @Override
     public Coupon createCoupon(CouponDTO couponDTO){
@@ -41,6 +49,14 @@ public class CouponServiceImpl implements CouponService{
         System.out.println(coupon);
 
         return couponRepo.save(coupon);
+    }
+
+    public List<CouponDTO> getAllCoupons(){
+        List<Coupon> coupons = couponRepo.findAll();
+
+        List<CouponDTO> couponDTOs = coupons.stream().map(coupon -> modelMapper.map(coupon, CouponDTO.class))
+				.collect(Collectors.toList());
+        return couponDTOs;
     }
 }
 

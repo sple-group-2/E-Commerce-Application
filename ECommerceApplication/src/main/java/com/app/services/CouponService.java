@@ -11,5 +11,6 @@ public interface CouponService {
     
 	Coupon updateCoupon(CouponDTO couponDTO, String couponName);
 
+    List<CouponDTO> getAllCoupons();
 }
 

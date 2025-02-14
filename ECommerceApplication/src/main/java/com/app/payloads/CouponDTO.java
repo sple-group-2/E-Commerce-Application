@@ -8,9 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CouponDTO {
-
+	private Long couponId = null;
 	private String couponName = null;
 	private String couponCode = null;
 	private double discountValue = 0;
-
 }
