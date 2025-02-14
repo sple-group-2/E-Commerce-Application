@@ -4,7 +4,6 @@ import com.app.entites.Brand;
 import com.app.payloads.BrandDTO;
 import com.app.payloads.BrandResponse;
 
-
 public interface BrandService {
 
     BrandDTO createBrand(Brand brand);

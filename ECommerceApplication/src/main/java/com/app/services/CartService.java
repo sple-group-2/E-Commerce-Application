@@ -6,7 +6,7 @@ import com.app.payloads.CartDTO;
 
 public interface CartService {
 	
-	CartDTO addProductToCart(Long cartId, Long productId, Integer quantity);
+	CartDTO addProductToCart(Long cartId, Long productId, Integer quantity, String couponCode);
 	
 	List<CartDTO> getAllCarts();
 	

@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BrandDTO {
-
-	private Long brandId;
-	private String brandName;
-//	private List<ProductDTO> products = new ArrayList<>();
-
+public class CouponDTO {
+	private Long couponId = null;
+	private String couponName = null;
+	private String couponCode = null;
+	private double discountValue = 0;
 }

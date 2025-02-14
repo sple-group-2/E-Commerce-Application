@@ -19,6 +19,7 @@ import com.app.exceptions.ResourceNotFoundException;
 import com.app.payloads.BrandDTO;
 import com.app.payloads.CategoryDTO;
 import com.app.payloads.BrandResponse;
+import com.app.payloads.CategoryResponse;
 import com.app.repositories.BrandRepo;
 import com.app.repositories.CategoryRepo;
 

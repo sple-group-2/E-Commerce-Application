@@ -19,6 +19,7 @@ import com.app.entites.Category;
 import com.app.payloads.BrandDTO;
 import com.app.payloads.CategoryDTO;
 import com.app.payloads.BrandResponse;
+import com.app.payloads.CategoryResponse;
 import com.app.services.BrandService;
 import com.app.services.CategoryService;
 

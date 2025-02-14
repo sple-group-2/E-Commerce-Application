@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +15,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table(name = "coupons")
@@ -26,12 +28,13 @@ public class Coupon {
 	private Long couponId;
 
 	@NotBlank
+	@Column(unique = true) 
 	private String couponName;
 
     @NotBlank
+	@Column(unique = true)
     private String couponCode;
 
-    @NotBlank
     private double discountValue;
 
 	@OneToMany(mappedBy = "coupon", cascade =  { CascadeType.PERSIST, CascadeType.MERGE } )
