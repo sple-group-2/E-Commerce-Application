@@ -59,18 +59,32 @@ public class ProductServiceImpl implements ProductService {
 	private String path;
 
 	@Override
-	public ProductDTO addProduct(Long categoryId, Product product) {
+	public ProductDTO addProduct(Long categoryId, Product product, Long brandId) {
 
 		Category category = categoryRepo.findById(categoryId)
 				.orElseThrow(() -> new ResourceNotFoundException("Category", "categoryId", categoryId));
+		
+		Brand brand = brandRepo.findById(brandId)
+				.orElseThrow(() -> new ResourceNotFoundException("Brand", "brandId", brandId));
 
 		boolean isProductNotPresent = true;
 
-		List<Product> products = category.getProducts();
+		List<Product> productsOfCategory = category.getProducts();
+		List<Product> productsOfBrand = brand.getProducts();
 
-		for (int i = 0; i < products.size(); i++) {
-			if (products.get(i).getProductName().equals(product.getProductName())
-					&& products.get(i).getDescription().equals(product.getDescription())) {
+
+		for (int i = 0; i < productsOfCategory.size(); i++) {
+			if (productsOfCategory.get(i).getProductName().equals(product.getProductName())
+					&& productsOfCategory.get(i).getDescription().equals(product.getDescription())) {
+
+				isProductNotPresent = false;
+				break;
+			}
+		}
+
+		for (int i = 0; i < productsOfBrand.size(); i++) {
+			if (productsOfBrand.get(i).getProductName().equals(product.getProductName())
+					&& productsOfBrand.get(i).getDescription().equals(product.getDescription())) {
 
 				isProductNotPresent = false;
 				break;
@@ -81,6 +95,8 @@ public class ProductServiceImpl implements ProductService {
 			product.setImage("default.png");
 
 			product.setCategory(category);
+
+			product.setBrand(brand);
 
 			double specialPrice = product.getPrice() - ((product.getDiscount() * 0.01) * product.getPrice());
 			product.setSpecialPrice(specialPrice);
