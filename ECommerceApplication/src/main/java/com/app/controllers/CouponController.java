@@ -39,17 +39,17 @@ public class CouponController {
 	private CouponService couponService;
 
 	@PostMapping("/admin/coupon")
-	public ResponseEntity<Coupon> createCoupon(@Valid @RequestBody CouponDTO couponDTO) {
-        Coupon coupon = couponService.createCoupon(couponDTO);
+	public ResponseEntity<CouponDTO> createCoupon(@Valid @RequestBody CouponDTO couponDTO) {
+        CouponDTO coupon = couponService.createCoupon(couponDTO);
 
-		return new ResponseEntity<Coupon>(coupon, HttpStatus.CREATED);
+		return new ResponseEntity<CouponDTO>(coupon, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/admin/coupon/{couponName}")
-	public ResponseEntity<Coupon> updateCoupon(@Valid @RequestBody CouponDTO couponDTO, @PathVariable String couponName) {
-		Coupon coupon = couponService.updateCoupon(couponDTO, couponName);
+	public ResponseEntity<CouponDTO> updateCoupon(@Valid @RequestBody CouponDTO couponDTO, @PathVariable String couponName) {
+		CouponDTO coupon = couponService.updateCoupon(couponDTO, couponName);
 
-		return new ResponseEntity<Coupon>(coupon, HttpStatus.OK);
+		return new ResponseEntity<CouponDTO>(coupon, HttpStatus.OK);
 	}
 	
 	@GetMapping("/admin/coupons")

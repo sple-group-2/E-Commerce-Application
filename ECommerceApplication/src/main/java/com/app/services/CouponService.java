@@ -7,9 +7,9 @@ import com.app.payloads.CouponDTO;
 
 public interface CouponService {
 
-    Coupon createCoupon(CouponDTO couponDTO);
+    CouponDTO createCoupon(CouponDTO couponDTO);
     
-	Coupon updateCoupon(CouponDTO couponDTO, String couponName);
+	CouponDTO updateCoupon(CouponDTO couponDTO, String couponName);
 
     List<CouponDTO> getAllCoupons();
 

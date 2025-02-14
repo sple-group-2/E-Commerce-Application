@@ -25,17 +25,17 @@ public class CouponServiceImpl implements CouponService{
 	private ModelMapper modelMapper;
 
     @Override
-    public Coupon createCoupon(CouponDTO couponDTO){
+    public CouponDTO createCoupon(CouponDTO couponDTO){
         Coupon coupon = new Coupon();
         coupon.setCouponName(couponDTO.getCouponName());
         coupon.setCouponCode(couponDTO.getCouponCode());
         coupon.setDiscountValue(couponDTO.getDiscountValue());
         couponRepo.save(coupon);
-        return coupon;
+        return modelMapper.map(coupon, CouponDTO.class);
     }
 
     @Override
-    public Coupon updateCoupon(CouponDTO couponDTO, String couponName){
+    public CouponDTO updateCoupon(CouponDTO couponDTO, String couponName){
         Coupon coupon = couponRepo.findByCouponName(couponName);
 
         if (coupon == null) {
@@ -45,10 +45,9 @@ public class CouponServiceImpl implements CouponService{
         coupon.setCouponName(couponDTO.getCouponName());
         coupon.setCouponCode(couponDTO.getCouponCode());
         coupon.setDiscountValue(couponDTO.getDiscountValue());
+        couponRepo.save(coupon);
 
-        System.out.println(coupon);
-
-        return couponRepo.save(coupon);
+        return modelMapper.map(coupon, CouponDTO.class);
     }
 
     @Override
