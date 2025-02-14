@@ -14,5 +14,7 @@ public interface CouponService {
     List<CouponDTO> getAllCoupons();
 
     CouponDTO getCouponByName(String couponName);
+
+    CouponDTO deleteCoupon(String couponName);
 }
 

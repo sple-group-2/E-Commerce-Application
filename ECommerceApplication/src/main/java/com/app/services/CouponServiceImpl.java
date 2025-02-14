@@ -66,5 +66,13 @@ public class CouponServiceImpl implements CouponService{
 
         return modelMapper.map(coupon, CouponDTO.class);
     }
+
+    @Override
+    public CouponDTO deleteCoupon(String couponName){
+        Coupon coupon = couponRepo.findByCouponName(couponName);
+
+        couponRepo.delete(coupon);
+        return modelMapper.map(coupon, CouponDTO.class);
+    }
 }
 

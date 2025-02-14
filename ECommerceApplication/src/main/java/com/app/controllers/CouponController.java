@@ -65,4 +65,11 @@ public class CouponController {
 
 		return new ResponseEntity<CouponDTO>(coupon, HttpStatus.FOUND);
 	}
+
+	@DeleteMapping("/admin/coupons/{couponName}")
+	public ResponseEntity<CouponDTO> deleteCoupon(@PathVariable String couponName) {
+		CouponDTO coupon = couponService.deleteCoupon(couponName);
+
+		return new ResponseEntity<CouponDTO>(coupon, HttpStatus.OK);
+	}
 }
