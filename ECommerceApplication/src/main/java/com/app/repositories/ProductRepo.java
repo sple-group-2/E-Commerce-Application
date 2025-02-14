@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.app.entites.Brand;
 import com.app.entites.Category;
 import com.app.entites.Product;
-import java.util.List;
-
 
 
 @Repository
