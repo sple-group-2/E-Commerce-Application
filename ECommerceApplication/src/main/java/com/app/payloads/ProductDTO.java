@@ -18,5 +18,6 @@ public class ProductDTO {
 	private double discount;
 	private double specialPrice;
 	private String brandName;
-
+	private String couponName;
+	
 }
