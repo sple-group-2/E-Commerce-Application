@@ -37,8 +37,9 @@ public class CartServiceImpl implements CartService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public CartDTO addProductToCart(Long cartId, Long productId, Integer quantity) {
+	public CartDTO addProductToCart(Long cartId, Long productId, Integer quantity, String couponCode) {
 
+		
 		Cart cart = cartRepo.findById(cartId)
 				.orElseThrow(() -> new ResourceNotFoundException("Cart", "cartId", cartId));
 
@@ -60,6 +61,19 @@ public class CartServiceImpl implements CartService {
 					+ " less than or equal to the quantity " + product.getQuantity() + ".");
 		}
 
+		Boolean couponFlag = false;
+		try {
+			if (couponCode != null){
+				System.out.println();
+				couponFlag = couponCode.equals(product.getCoupon().getCouponCode());
+				couponFlag = true;
+			}
+				
+		}
+		catch (NullPointerException e) {
+			throw new APIException("Coupon code is not valid");
+		}
+
 		CartItem newCartItem = new CartItem();
 
 		newCartItem.setProduct(product);
@@ -72,7 +86,11 @@ public class CartServiceImpl implements CartService {
 
 		product.setQuantity(product.getQuantity() - quantity);
 
-		cart.setTotalPrice(cart.getTotalPrice() + (product.getSpecialPrice() * quantity));
+		if (couponFlag)
+			cart.setTotalPrice(cart.getTotalPrice() + 
+				((product.getSpecialPrice() - product.getCoupon().getDiscountValue()) * quantity));
+		else 
+			cart.setTotalPrice(cart.getTotalPrice() + (product.getSpecialPrice() * quantity));
 
 		CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
