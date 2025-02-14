@@ -51,12 +51,20 @@ public class CouponServiceImpl implements CouponService{
         return couponRepo.save(coupon);
     }
 
+    @Override
     public List<CouponDTO> getAllCoupons(){
         List<Coupon> coupons = couponRepo.findAll();
 
         List<CouponDTO> couponDTOs = coupons.stream().map(coupon -> modelMapper.map(coupon, CouponDTO.class))
 				.collect(Collectors.toList());
         return couponDTOs;
+    }
+
+    @Override
+    public CouponDTO getCouponByName(String couponName){
+        Coupon coupon = couponRepo.findByCouponName(couponName);
+
+        return modelMapper.map(coupon, CouponDTO.class);
     }
 }
 

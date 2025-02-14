@@ -58,4 +58,11 @@ public class CouponController {
 
 		return new ResponseEntity<List<CouponDTO>>(coupons, HttpStatus.FOUND);
 	}
+
+	@GetMapping("/admin/coupons/{couponName}")
+	public ResponseEntity<CouponDTO> getCoupon(@PathVariable String couponName) {
+		CouponDTO coupon = couponService.getCouponByName(couponName);
+
+		return new ResponseEntity<CouponDTO>(coupon, HttpStatus.FOUND);
+	}
 }
