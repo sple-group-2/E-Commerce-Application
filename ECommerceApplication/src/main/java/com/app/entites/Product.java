@@ -63,5 +63,6 @@ public class Product {
 	@JoinColumn(name = "coupon_id")
 	private Coupon coupon;
 
-
+	@OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private List<Review> reviews = new ArrayList<>();
 }
