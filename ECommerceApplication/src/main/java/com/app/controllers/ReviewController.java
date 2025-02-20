@@ -4,15 +4,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.payloads.ReviewDTO;
+import com.app.payloads.ReviewResponse;
 import com.app.services.ReviewService;
+import com.app.config.AppConstants;
 import com.app.entites.Review;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -48,30 +52,42 @@ public class ReviewController {
 		return new ResponseEntity<String>(status, HttpStatus.OK);
 	}
 
-	// @GetMapping("/admin/orders")
-	// public ResponseEntity<OrderResponse> getAllOrders(
-	// 		@RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
-	// 		@RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
-	// 		@RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_ORDERS_BY, required = false) String sortBy,
-	// 		@RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder) {
+	@GetMapping("/admin/reviews")
+	public ResponseEntity<ReviewResponse> getAllReviews(
+			@RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+			@RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+			@RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_REVIEWS_BY, required = false) String sortBy,
+			@RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder) {
 		
-	// 	OrderResponse orderResponse = orderService.getAllOrders(pageNumber, pageSize, sortBy, sortOrder);
+		ReviewResponse reviewResponse = reviewService.getAllReviews(pageNumber, pageSize, sortBy, sortOrder);
 
-	// 	return new ResponseEntity<OrderResponse>(orderResponse, HttpStatus.FOUND);
-	// }
-	
-	// @GetMapping("public/users/{email}/orders")
-	// public ResponseEntity<List<OrderDTO>> getOrdersByUser(@PathVariable String email) {
-	// 	List<OrderDTO> orders = orderService.getOrdersByUser(email);
+		return new ResponseEntity<ReviewResponse>(reviewResponse, HttpStatus.FOUND);
+	}
+
+	@GetMapping("/public/users/{email}/reviews")
+	public ResponseEntity<ReviewResponse> getReviewByUser(
+			@PathVariable String email,
+			@RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+			@RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+			@RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_REVIEWS_BY, required = false) String sortBy,
+			@RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder) {
 		
-	// 	return new ResponseEntity<List<OrderDTO>>(orders, HttpStatus.FOUND);
-	// }
-	
-	// @GetMapping("public/users/{email}/orders/{orderId}")
-	// public ResponseEntity<OrderDTO> getOrderByUser(@PathVariable String email, @PathVariable Long orderId) {
-	// 	OrderDTO order = orderService.getOrder(email, orderId);
+		ReviewResponse reviewResponse = reviewService.getReviewByUser(email, pageNumber, pageSize, sortBy, sortOrder);
+
+		return new ResponseEntity<ReviewResponse>(reviewResponse, HttpStatus.FOUND);
+	}
+
+	@GetMapping("/public/products/{productId}/reviews")
+	public ResponseEntity<ReviewResponse> getReviewByProduct(
+			@PathVariable Long productId,
+			@RequestParam(name = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+			@RequestParam(name = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+			@RequestParam(name = "sortBy", defaultValue = AppConstants.SORT_REVIEWS_BY, required = false) String sortBy,
+			@RequestParam(name = "sortOrder", defaultValue = AppConstants.SORT_DIR, required = false) String sortOrder) {
 		
-	// 	return new ResponseEntity<OrderDTO>(order, HttpStatus.FOUND);
-	// }
+		ReviewResponse reviewResponse = reviewService.getReviewByProduct(productId, pageNumber, pageSize, sortBy, sortOrder);
+
+		return new ResponseEntity<ReviewResponse>(reviewResponse, HttpStatus.FOUND);
+	}
 	
 }

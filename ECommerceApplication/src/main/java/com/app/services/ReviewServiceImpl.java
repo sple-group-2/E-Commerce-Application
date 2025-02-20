@@ -1,8 +1,15 @@
 package com.app.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 
 import com.app.entites.Product;
 import com.app.entites.Review;
@@ -10,6 +17,7 @@ import com.app.entites.User;
 import com.app.exceptions.APIException;
 import com.app.exceptions.ResourceNotFoundException;
 import com.app.payloads.ReviewDTO;
+import com.app.payloads.ReviewResponse;
 import com.app.repositories.ProductRepo;
 import com.app.repositories.ReviewRepo;
 import com.app.repositories.UserRepo;
@@ -55,35 +63,36 @@ public class ReviewServiceImpl implements ReviewService {
 		return modelMapper.map(newReview, ReviewDTO.class);
 	}
 
-	// @Override
-	// public BrandResponse getBrands(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
-	// 	Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
-	// 			: Sort.by(sortBy).descending();
+	@Override
+	public ReviewResponse getAllReviews(Integer pageNumber, Integer pageSize, String sortBy, String sortOrder) {
+		Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
 
-	// 	Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+		Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
 		
-	// 	Page<Brand> pageBrands = brandRepo.findAll(pageDetails);
+		Page<Review> pageReview = reviewRepo.findAll(pageDetails);
 
-	// 	List<Brand> brands = pageBrands.getContent();
+		List<Review> reviews = pageReview.getContent();
 
-	// 	if (brands.size() == 0) {
-	// 		throw new APIException("No brand is created till now");
-	// 	}
+		if (reviews.size() == 0) {
+			throw new APIException("No review is created till now");
+		}
 
-	// 	List<BrandDTO> brandDTOs = brands.stream()
-	// 			.map(brand -> modelMapper.map(brand, BrandDTO.class)).collect(Collectors.toList());
+		List<ReviewDTO> reviewDTOs = reviews.stream()
+				.map(brand -> modelMapper.map(brand, ReviewDTO.class)).collect(Collectors.toList());
 
-	// 	BrandResponse brandResponse = new BrandResponse();
+		ReviewResponse reviewResponse = new ReviewResponse();
 		
-	// 	brandResponse.setContent(brandDTOs);
-	// 	brandResponse.setPageNumber(pageBrands.getNumber());
-	// 	brandResponse.setPageSize(pageBrands.getSize());
-	// 	brandResponse.setTotalElements(pageBrands.getTotalElements());
-	// 	brandResponse.setTotalPages(pageBrands.getTotalPages());
-	// 	brandResponse.setLastPage(pageBrands.isLast());
+		reviewResponse.setContent(reviewDTOs);
+		reviewResponse.setPageNumber(pageReview.getNumber());
+		reviewResponse.setPageSize(pageReview.getSize());
+		reviewResponse.setTotalElements(pageReview.getTotalElements());
+		reviewResponse.setTotalPages(pageReview.getTotalPages());
+		reviewResponse.setLastPage(pageReview.isLast());
 		
-	// 	return brandResponse;
-	// }
+		return reviewResponse;
+	}
+
 
 	@Override
 	public ReviewDTO updateReview(String email, Long productId, Review content) {
@@ -115,6 +124,73 @@ public class ReviewServiceImpl implements ReviewService {
 		reviewRepo.delete(review);
 
 		return "Review deleted successfully !!!";
+	}
+
+	@Override
+	public ReviewResponse getReviewByUser(String email, Integer pageNumber, Integer pageSize, String sortBy,
+			String sortOrder) {
+		
+		User user = userRepo.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
+
+		Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+
+		Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+		
+		Page<Review> pageReview = reviewRepo.findByUser(user, pageDetails);
+
+		List<Review> reviews = pageReview.getContent();
+
+		if (reviews.size() == 0) {
+			throw new APIException("No review is created till now");
+		}
+
+		List<ReviewDTO> reviewDTOs = reviews.stream()
+				.map(brand -> modelMapper.map(brand, ReviewDTO.class)).collect(Collectors.toList());
+
+		ReviewResponse reviewResponse = new ReviewResponse();
+		
+		reviewResponse.setContent(reviewDTOs);
+		reviewResponse.setPageNumber(pageReview.getNumber());
+		reviewResponse.setPageSize(pageReview.getSize());
+		reviewResponse.setTotalElements(pageReview.getTotalElements());
+		reviewResponse.setTotalPages(pageReview.getTotalPages());
+		reviewResponse.setLastPage(pageReview.isLast());
+		
+		return reviewResponse;
+	}
+	@Override
+	public ReviewResponse getReviewByProduct(Long productId, Integer pageNumber, Integer pageSize, String sortBy,
+			String sortOrder) {
+		
+		Product product = productRepo.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
+
+		Sort sortByAndOrder = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending()
+				: Sort.by(sortBy).descending();
+
+		Pageable pageDetails = PageRequest.of(pageNumber, pageSize, sortByAndOrder);
+		
+		Page<Review> pageReview = reviewRepo.findByProduct(product, pageDetails);
+
+		List<Review> reviews = pageReview.getContent();
+
+		if (reviews.size() == 0) {
+			throw new APIException("No review is created till now");
+		}
+
+		List<ReviewDTO> reviewDTOs = reviews.stream()
+				.map(brand -> modelMapper.map(brand, ReviewDTO.class)).collect(Collectors.toList());
+
+		ReviewResponse reviewResponse = new ReviewResponse();
+		
+		reviewResponse.setContent(reviewDTOs);
+		reviewResponse.setPageNumber(pageReview.getNumber());
+		reviewResponse.setPageSize(pageReview.getSize());
+		reviewResponse.setTotalElements(pageReview.getTotalElements());
+		reviewResponse.setTotalPages(pageReview.getTotalPages());
+		reviewResponse.setLastPage(pageReview.isLast());
+		
+		return reviewResponse;
 	}
 
 }
