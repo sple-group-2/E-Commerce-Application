@@ -12,16 +12,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.app.entites.Brand;
-import com.app.entites.Category;
 import com.app.entites.Product;
 import com.app.exceptions.APIException;
 import com.app.exceptions.ResourceNotFoundException;
 import com.app.payloads.BrandDTO;
-import com.app.payloads.CategoryDTO;
 import com.app.payloads.BrandResponse;
-import com.app.payloads.CategoryResponse;
 import com.app.repositories.BrandRepo;
-import com.app.repositories.CategoryRepo;
 
 import jakarta.transaction.Transactional;
 

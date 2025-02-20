@@ -12,19 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.config.AppConstants;
-import com.app.entites.Brand;
-import com.app.entites.Category;
-import com.app.entites.Coupon;
-import com.app.payloads.BrandDTO;
-import com.app.payloads.CategoryDTO;
-import com.app.payloads.CategoryResponse;
 import com.app.payloads.CouponDTO;
-import com.app.services.BrandService;
-import com.app.services.CategoryService;
 import com.app.services.CouponService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

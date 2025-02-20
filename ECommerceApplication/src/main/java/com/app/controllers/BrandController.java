@@ -15,13 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.config.AppConstants;
 import com.app.entites.Brand;
-import com.app.entites.Category;
 import com.app.payloads.BrandDTO;
-import com.app.payloads.CategoryDTO;
 import com.app.payloads.BrandResponse;
-import com.app.payloads.CategoryResponse;
 import com.app.services.BrandService;
-import com.app.services.CategoryService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
