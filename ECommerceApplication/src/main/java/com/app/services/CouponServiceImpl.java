@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.entites.Coupon;
-import com.app.payloads.AddressDTO;
 import com.app.payloads.CouponDTO;
 import com.app.repositories.CouponRepo;
 
