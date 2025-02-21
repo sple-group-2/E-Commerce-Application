@@ -127,6 +127,8 @@ public class OrderServiceImpl implements OrderService {
 		
 		orderItems.forEach(item -> orderDTO.getOrderItems().add(modelMapper.map(item, OrderItemDTO.class)));
 
+		cart.setTotalPrice(0.0);
+
 		return orderDTO;
 	}
 

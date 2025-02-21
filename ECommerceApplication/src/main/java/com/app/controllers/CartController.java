@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.payloads.CartDTO;
@@ -26,8 +27,8 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 
-	@PostMapping("/public/carts/{cartId}/products/{productId}/quantity/{quantity}/couponCode/{couponCode}")
-	public ResponseEntity<CartDTO> addProductToCart(@PathVariable Long cartId, @PathVariable Long productId, @PathVariable Integer quantity, @PathVariable String couponCode) {
+	@PostMapping("/public/carts/{cartId}/products/{productId}/quantity/{quantity}")
+	public ResponseEntity<CartDTO> addProductToCart(@PathVariable Long cartId, @PathVariable Long productId, @PathVariable Integer quantity, @RequestParam(required = false) String couponCode) {
 		CartDTO cartDTO = cartService.addProductToCart(cartId, productId, quantity, couponCode);
 		
 		return new ResponseEntity<CartDTO>(cartDTO, HttpStatus.CREATED);

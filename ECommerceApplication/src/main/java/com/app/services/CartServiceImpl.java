@@ -64,7 +64,6 @@ public class CartServiceImpl implements CartService {
 		Boolean couponFlag = false;
 		try {
 			if (couponCode != null){
-				System.out.println();
 				couponFlag = couponCode.equals(product.getCoupon().getCouponCode());
 				couponFlag = true;
 			}
